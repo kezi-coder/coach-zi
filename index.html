@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Coach Zi — Your AI Fitness Coach</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo">
+      <div class="logo-icon">💪</div>
+      <div>
+        <div class="logo-name">Coach Zi</div>
+        <div class="logo-sub">AI Fitness Coach</div>
+      </div>
+    </div>
+    <div class="status">
+      <span class="status-dot"></span> Online
+    </div>
+  </header>
+
+  <!-- CHAT WINDOW -->
+  <main>
+    <div id="chat-window">
+
+      <!-- Welcome message (shown on first load) -->
+      <div class="message ai">
+        <div class="avatar">💪</div>
+        <div class="bubble">
+          Hey! I'm Coach Zi, your personal AI fitness coach.<br><br>
+          I can help you with <strong>workouts</strong>, <strong>nutrition tips</strong>, <strong>motivation</strong>, and building healthy habits. What are your goals today?
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- QUICK SUGGESTIONS -->
+  <div class="suggestions">
+    <button class="suggestion-btn" onclick="sendQuick('Give me a 10-minute home workout')">🏠 10-min home workout</button>
+    <button class="suggestion-btn" onclick="sendQuick('What should I eat before training?')">🥗 Pre-workout food</button>
+    <button class="suggestion-btn" onclick="sendQuick('How do I stay motivated?')">⚡ Stay motivated</button>
+    <button class="suggestion-btn" onclick="sendQuick('Build a beginner gym plan')">🏋️ Beginner gym plan</button>
+  </div>
+
+  <!-- INPUT BAR -->
+  <div class="input-bar">
+    <input
+      type="text"
+      id="user-input"
+      placeholder="Ask Coach Zi anything..."
+      autocomplete="off"
+    />
+    <button id="send-btn" onclick="sendMessage()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="22" y1="2" x2="11" y2="13"></line>
+        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+      </svg>
+    </button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
