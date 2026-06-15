@@ -166,17 +166,48 @@ function showTyping() {
 // -------------------------------------------------------
 
 function formatMessage(text) {
-  return text
+  // Escape HTML first
+  let safe = text
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/^### (.*$)/gim, '<h4>$1</h4>')           // ### headers
-    .replace(/^## (.*$)/gim, '<h3>$1</h3>')            // ## headers
-    .replace(/^# (.*$)/gim, '<h3>$1</h3>')             // # headers
-    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')  // **bold**
-    .replace(/^- (.*$)/gim, '<li>$1</li>')             // - bullet points
-    .replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>')         // wrap bullets in <ul>
-    .replace(/\n/g, '<br>');                            // line breaks
+    .replace(/>/g, '&gt;');
+
+  // Split into lines so we can handle headers/bullets per line
+  const lines = safe.split('\n');
+  let html = '';
+  let inList = false;
+
+  for (let line of lines) {
+    line = line.trim();
+
+    if (line.startsWith('### ')) {
+      if (inList) { html += '</ul>'; inList = false; }
+      html += `<h4>${line.slice(4)}</h4>`;
+    } else if (line.startsWith('## ')) {
+      if (inList) { html += '</ul>'; inList = false; }
+      html += `<h4>${line.slice(3)}</h4>`;
+    } else if (line.startsWith('# ')) {
+      if (inList) { html += '</ul>'; inList = false; }
+      html += `<h4>${line.slice(2)}</h4>`;
+    } else if (line.startsWith('- ')) {
+      if (!inList) { html += '<ul>'; inList = true; }
+      html += `<li>${line.slice(2)}</li>`;
+    } else if (line === '') {
+      if (inList) { html += '</ul>'; inList = false; }
+      html += '<br>';
+    } else {
+      if (inList) { html += '</ul>'; inList = false; }
+      html += line + '<br>';
+    }
+  }
+
+  if (inList) html += '</ul>';
+
+  // Bold text
+  html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+
+  return html;
+}
 }
 }
 
