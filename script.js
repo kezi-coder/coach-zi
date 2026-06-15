@@ -170,8 +170,14 @@ function formatMessage(text) {
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
+    .replace(/^### (.*$)/gim, '<h4>$1</h4>')           // ### headers
+    .replace(/^## (.*$)/gim, '<h3>$1</h3>')            // ## headers
+    .replace(/^# (.*$)/gim, '<h3>$1</h3>')             // # headers
     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')  // **bold**
+    .replace(/^- (.*$)/gim, '<li>$1</li>')             // - bullet points
+    .replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>')         // wrap bullets in <ul>
     .replace(/\n/g, '<br>');                            // line breaks
+}
 }
 
 // -------------------------------------------------------
