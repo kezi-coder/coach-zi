@@ -166,31 +166,22 @@ function showTyping() {
 // -------------------------------------------------------
 
 function formatMessage(text) {
-  // Escape HTML first
   let safe = text
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;');
 
-  // Split into lines so we can handle headers/bullets per line
   const lines = safe.split('\n');
   let html = '';
   let inList = false;
 
   for (let line of lines) {
     line = line.trim();
-
-    if (line.startsWith('### ')) {
+    if (line.startsWith('# ') || line.startsWith('## ') || line.startsWith('### ')) {
       if (inList) { html += '</ul>'; inList = false; }
-      html += `<h4>${line.slice(4)}</h4>`;
-    } else if (line.startsWith('## ')) {
-      if (inList) { html += '</ul>'; inList = false; }
-      html += `<h4>${line.slice(3)}</h4>`;
-    } else if (line.startsWith('# ')) {
-      if (inList) { html += '</ul>'; inList = false; }
-      html += `<h4>${line.slice(2)}</h4>`;
+      html += `<strong>${line.replace(/^#+\s/, '')}</strong><br>`;
     } else if (line.startsWith('- ')) {
-      if (!inList) { html += '<ul>'; inList = true; }
+      if (!inList) { html += '<ul style="margin:4px 0 4px 16px;padding:0">'; inList = true; }
       html += `<li>${line.slice(2)}</li>`;
     } else if (line === '') {
       if (inList) { html += '</ul>'; inList = false; }
@@ -200,17 +191,10 @@ function formatMessage(text) {
       html += line + '<br>';
     }
   }
-
   if (inList) html += '</ul>';
-
-  // Bold text
   html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-
   return html;
 }
-}
-}
-
 // -------------------------------------------------------
 // 8. KEYBOARD SHORTCUT
 //    Press Enter to send a message.
